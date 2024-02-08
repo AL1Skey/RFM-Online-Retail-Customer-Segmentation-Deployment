@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
-from bs4 import BeautifulSoup
-import requests
 from django.views.decorators.csrf import csrf_exempt
 import json
 import os
-
-from pyspark.sql import SparkSession
 import pandas as pd
 import numpy as np
 
