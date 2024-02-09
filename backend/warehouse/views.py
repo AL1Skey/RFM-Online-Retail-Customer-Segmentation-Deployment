@@ -1,7 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
-from bs4 import BeautifulSoup
-import requests
 from django.views.decorators.csrf import csrf_exempt
 import json
 import os
@@ -21,7 +19,8 @@ def get_data(request):
     # df_dictlist = [json.loads(i) for i in test]
     # df_json = json.dumps(df_dictlist)
     
-    df = pd.read_csv('https://raw.githubusercontent.com/FTDS-assignment-bay/p2-final-project-p2-final-project-ftds-011-hck-group-001/main/data/backend.csv').head()
+    url ='https://raw.githubusercontent.com/FTDS-assignment-bay/p2-final-project-p2-final-project-ftds-011-hck-group-001/main/data/backend.csv'
+    df = pd.read_csv(path).head()
     df_json = df.to_json(orient='split')
 
     return JsonResponse(df_json,safe=False,content_type='application/json')
@@ -36,7 +35,10 @@ def get_one_data(request):
     print(f"columns:{columns}, value:{value}")
     
     path = os.path.join(os.getcwd(),'warehouse','data','rfm_cluster.csv')
-    df = pd.read_csv('https://raw.githubusercontent.com/FTDS-assignment-bay/p2-final-project-p2-final-project-ftds-011-hck-group-001/main/data/backend.csv')
+    
+    url ='https://raw.githubusercontent.com/FTDS-assignment-bay/p2-final-project-p2-final-project-ftds-011-hck-group-001/main/data/backend.csv'
+    
+    df = pd.read_csv(path)
     df = df.query(f'{columns} == {value}').sort_values(by=['monetary_value','frequency']).reset_index(drop=True).iloc[0:10]
     print(df.head())
     df_json = df.to_json(orient='split')
